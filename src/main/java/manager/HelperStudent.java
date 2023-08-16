@@ -4,6 +4,7 @@ import models.Gender;
 import models.Hobby;
 import models.StudentDTO;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
 import java.util.List;
@@ -13,8 +14,9 @@ public interface HelperStudent extends HelperBase{
     default void selectForms(){
         click(By.xpath("//div[@class='category-cards']/div[2]"));
     }
-    default void selectPracticeForm(){
-        click(By.id("item-0"));
+    default void selectPracticeForm(){click(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[1]"));
+
+
     }
 
     default void fillForm(StudentDTO studentDTO){
@@ -35,13 +37,17 @@ public interface HelperStudent extends HelperBase{
     }
 
     default void selectGender(Gender gender){
+        String gen;
+
         if(gender.equals(Gender.MALE)){
-            click(By.id("gender-radio-1"));
+            gen = "1";
         } else if (gender.equals(Gender.FEMALE)){
-            click(By.id("gender-radio-2"));
+            gen = "2";
         } else {
-            click(By.id("gender-radio-3"));
+            gen = "3";
         }
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript("document.querySelector('#gender-radio-" + gen +"').checked=true");
     }
 
     default void addSubject(String subjects){
@@ -55,19 +61,21 @@ public interface HelperStudent extends HelperBase{
     }
 
     default void selectHobby(List<Hobby> hobbies){
-
         for(Hobby hobby : hobbies){
+            String hob = null;
             switch (hobby){
                 case SPORTS:
-                    click(By.id("hobbies-checkbox-1"));
+                    hob = "1";
                     break;
                 case READING:
-                    click(By.id("hobbies-checkbox-2"));
+                    hob = "2";
                     break;
                 case MUSIC:
-                    click(By.id("hobbies-checkbox-3"));
+                    hob = "3";
                     break;
             }
+            JavascriptExecutor js = (JavascriptExecutor) wd;
+            js.executeScript("document.querySelector('#hobbies-checkbox-" + hob +"').checked=true");//hobbies-checkbox-1
         }
     }
 
@@ -81,6 +89,11 @@ public interface HelperStudent extends HelperBase{
     }
 
     default void submit(){
-        click(By.id("submit"));
+        hideElement("document.querySelector('footer').setAttribute('style','display: none;')");
+        //click(By.id("submit"));
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript("document.querySelector('#submit').click();");
     }
+
+
 }

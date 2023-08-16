@@ -11,6 +11,6 @@ public class TestBase implements AppManager {
 
     @AfterSuite(alwaysRun = true)
     public void stop(){
-//        tearDown();
+        tearDown();
     }
 }

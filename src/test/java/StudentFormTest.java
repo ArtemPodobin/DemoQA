@@ -2,7 +2,10 @@ import manager.HelperStudent;
 import models.Gender;
 import models.Hobby;
 import models.StudentDTO;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -12,8 +15,11 @@ public class StudentFormTest implements HelperStudent {
 
     @BeforeMethod
     public void precondition(){
+
+        hideElement("document.querySelector('#adplus-anchor').setAttribute('style','display: none;')");
         selectForms();
         selectPracticeForm();
+        System.out.println(wd.findElements(By.id("item-0")).size());
     }
 
     @Test

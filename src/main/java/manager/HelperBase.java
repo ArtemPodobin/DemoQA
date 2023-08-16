@@ -1,7 +1,9 @@
 package manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import sun.font.Script;
 
 public interface HelperBase extends AppManager{
 
@@ -24,6 +26,12 @@ public interface HelperBase extends AppManager{
         }
     }
 
+    default void hideElement(String scriptLocator){
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript(scriptLocator);
+        pause(1000);
+
+    }
 
 
 }
